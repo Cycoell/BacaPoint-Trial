@@ -8,7 +8,7 @@ css/
 
 # File konfigurasi Tailwind yang tidak perlu diubah-ubah
 postcss.config.js
-tailwind.config.js
+
 
 # File yang berisi konfigurasi lokal atau tidak penting untuk versioning
 .vscode/
