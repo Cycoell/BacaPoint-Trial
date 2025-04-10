@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+
+# Output build atau compiled
+dist/
+build/
+css/
+
+# File konfigurasi Tailwind yang tidak perlu diubah-ubah
+postcss.config.js
+tailwind.config.js
+
+# File yang berisi konfigurasi lokal atau tidak penting untuk versioning
+.vscode/
+*.code-workspace
+
+# Uploads atau file yang dihasilkan dari user
+uploads/
+
+# File database lokal (kalau ada)
+db.php
+
+# File lingkungan/credential (jika pakai)
+.env
+
+# Cache
+*.log
+*.cache
