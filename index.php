@@ -1,9 +1,18 @@
+<?php
+session_start();
+include 'db.php';
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BacaPoint</title>
+    <link rel="icon" type="image/png" href="assets/logo_bawah.png?v=2">
     
     <!-- Link ke file CSS -->
     <link href="css/styles.css" rel="stylesheet">
@@ -19,7 +28,7 @@
 <body class="bg-slate-300">
 
    <!--LINK HEADER  -->
-   <?php include 'library/header.html'; ?>
+   <?php include 'library/header.php'; ?>
    <!--LINK HEADER  -->
 
 <!-- GAMBAR BESAR SECTION -->
@@ -106,7 +115,7 @@
 <!-- BAR SECTION -->
  
 <!-- LINK FOOTER -->
-<?php include 'library/footer.html'; ?>
+<?php include 'library/footer.php'; ?>
 <!-- LINK FOOTER -->
 
 <!--Link ke file JS -->

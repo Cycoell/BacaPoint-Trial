@@ -1,3 +1,22 @@
+<!-- PHP SESSION -->
+ 
+<?php
+// Mulai sesi
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['user'])) {
+    // Jika belum login, redirect ke halaman login
+    header("Location: /pages/login.php");
+    exit;
+}
+
+// Ambil data pengguna dari sesi
+$user = $_SESSION['user'];
+?>
+
+<!-- END PHP SESSION -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +38,7 @@
 <body class="bg-slate-300">
 
    <!--LINK HEADER  -->
-   <?php include 'library/header.html'; ?>
+   <?php include './library/header.php'; ?>
    <!--LINK HEADER  -->
 
 <!-- GAMBAR BESAR SECTION -->
@@ -58,32 +77,32 @@
 
       <!-- BacaPoin -->
       <a href="#" class="flex items-center gap-2 bg-orange-100 text-orange-600 px-3 py-1 rounded-full">
-        <img src="assets/coin-icon.png" alt="Coin" class="w-4 h-4" />
+        <img src="assets/icon_coin.png" alt="Coin" class="w-4 h-4 object-contain" />
         <span class="font-semibold">0</span>
         <span>BacaPoin</span>
       </a>
 
       <!-- Scan -->
-      <a href="#" class="flex items-center gap-1 border-l pl-4 hover:text-green-600">
-        <img src="assets/scan-icon.png" alt="Scan" class="w-4 h-4" />
+      <a href="pages/develop.php" class="flex items-center gap-1 border-l pl-4 hover:text-green-600">
+        <img src="assets/icon_scan.png" alt="Scan" class="w-4 h-4" />
         <span>Scan</span>
       </a>
 
       <!-- TopUp -->
-      <a href="#" class="flex items-center gap-1 border-l pl-4 hover:text-green-600">
-        <img src="assets/card-icon.png" alt="TopUp" class="w-4 h-4" />
+      <a href="pages/develop.php" class="flex items-center gap-1 border-l pl-4 hover:text-green-600">
+        <img src="assets/icon_topup.png" alt="TopUp" class="w-4 h-4" />
         <span>TopUp</span>
       </a>
 
       <!-- Riwayat -->
-      <a href="#" class="flex items-center gap-1 border-l pl-4 hover:text-green-600">
-        <img src="assets/history-icon.png" alt="Riwayat" class="w-4 h-4" />
+      <a href="pages/develop.php" class="flex items-center gap-1 border-l pl-4 hover:text-green-600">
+        <img src="assets/icon_history.png" alt="Riwayat" class="w-4 h-4" />
         <span>Riwayat</span>
       </a>
     </div>
 
     <!-- Right: Premium -->
-    <a href="#" class="border border-green-600 text-green-600 font-semibold text-sm px-4 py-1 rounded-full hover:bg-green-500 whitespace-nowrap">
+    <a href="pages/develop.php" class="border border-green-600 text-green-600 font-semibold text-sm px-4 py-1 rounded-full hover:bg-green-500 whitespace-nowrap">
       Jadi Member Premium
     </a>
 
@@ -204,7 +223,7 @@
 <!-- END LIBRARY SECTION -->
  
 <!-- LINK FOOTER -->
-<?php include 'library/footer.html'; ?>
+<?php include 'library/footer.php'; ?>
 <!-- END LINK FOOTER -->
 
 <!--Link ke file JS -->

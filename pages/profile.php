@@ -1,3 +1,8 @@
+<?php
+session_start();
+include '../db.php';
+?>
+
 <!-- profile.php -->
 <!DOCTYPE html>
 <html lang="id">
@@ -5,12 +10,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Bacapoint</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../css/styles.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-800">
 
 <!--LINK HEADER  -->
-<?php include 'library/header.php'; ?>
+<?php include '../library/header.php'; ?>
 <!--LINK HEADER  -->
 
 <!-- Main Content -->
@@ -36,7 +41,7 @@
             <a href="#" class="block text-gray-800 hover:font-semibold">Wishlist</a>
             <a href="#" class="block text-gray-800 hover:font-semibold">Transaksi</a>
             <a href="#" class="block text-gray-800 hover:font-semibold">Grafik Genre</a>
-            <a href="#" class="block text-red-500 hover:font-bold">Logout</a>
+            <a href="../config/logout.php" class="block text-red-500 hover:font-bold">Logout</a>
         </nav>
     </aside>
 
