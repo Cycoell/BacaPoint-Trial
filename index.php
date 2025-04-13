@@ -17,51 +17,10 @@
 
 </head>
 <body class="bg-slate-300">
-    <!-- HEADER SECTION -->
-    <section class="bg-white border-b border-gray-200 shadow-sm">
-      <div class="container mx-auto px-4 py-4">
 
-      <!-- Baris 1: Logo, Search, Auth -->
-      <div class="flex flex-col lg:flex-row items-center justify-between gap-2 ">
-
-      <!-- Logo -->
-       
-      <a href="/" class="ml-6 w-[120px] h-[80px] bg-no-repeat bg-[length:167px_190px] bg-center" style="background-image: url('assets/Logo_samping.png');">
-        <span class="sr-only">BacaPoint</span>
-      </a>
-       
-
-      <!-- Dropdown + Search -->
-      <div class="flex flex-1 max-w-2xl w-full items-center gap-3">
-        <select class="border rounded-md px-3 py-2 text-sm w-1/4">
-          <option>Kategori</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Cari judul buku, atau penulis"
-          class="w-full border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-      </div>
-
-      <!-- Auth Buttons -->
-      <div class="space-x-2">
-        <a href="register.php" class="px-4 py-1 border border-green-600 text-green-600 rounded hover:bg-green-50">Daftar</a>
-        <a href="login.php" class="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700">Masuk</a>
-      </div>
-    </div>
-
-    <!-- Baris 2: Nav Links -->
-        <nav class="flex justify-center flex-wrap gap-3 mt-1 text-xs text-gray-400">
-          <a href="#" class="hover:text-gray-600 transition">Omniscient Reader</a>
-          <a href="#" class="hover:text-gray-600 transition">Solo Leveling</a>
-          <a href="#" class="hover:text-gray-600 transition">Eleceed</a>
-          <a href="#" class="hover:text-gray-600 transition">Sweet Home</a>
-          <a href="#" class="hover:text-gray-600 transition">The Beginning After The End</a>
-        </nav>
-
-      </div>
-    </section>
-    <!-- HEADER SECTION -->
+   <!--LINK HEADER  -->
+   <?php include 'library/header.html'; ?>
+   <!--LINK HEADER  -->
 
 <!-- GAMBAR BESAR SECTION -->
 <section class="mt-10">
@@ -145,34 +104,12 @@
 </section>
 
 <!-- BAR SECTION -->
+ 
+<!-- LINK FOOTER -->
+<?php include 'library/footer.html'; ?>
+<!-- LINK FOOTER -->
 
-
-<!-- FOOTER SECTION -->
-<section class="bg-white border-t py-6 mt-4">
-  <div class="container mx-auto max-w-4xl px-2">
-    <div class="text-center">
-      <!-- Menu Footer -->
-      <div class="flex justify-center gap-6 text-sm text-gray-700 mb-6">
-        <a href="#" class="inline-block">Saran dan Pendapat</a>
-        <a href="#" class="inline-block">Bantuan</a>
-        <a href="#" class="inline-block">Syarat Penggunaan</a>
-        <a href="#" class="inline-block">Privasi</a>
-        <a href="#" class="inline-block">Info Iklan</a>
-      </div>
-      <!-- Logo -->
-      <div class="flex justify-center">
-        <img src="assets/Logo_bawah.png" alt="Logo" class="w-[80px] h-[80px] object-cover" />
-      </div>
-
-
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER SECTION -->
-
-
-  <!--Link ke file JS -->
+<!--Link ke file JS -->
   <script src="src/main.js"></script>
 </body>
 </html>
