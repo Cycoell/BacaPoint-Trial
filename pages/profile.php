@@ -1,6 +1,11 @@
 <?php
 session_start();
 include '../db.php';
+$activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
+?>
+
+<?php
+  $current_page = basename($_SERVER['PHP_SELF']); // Ambil nama file saat ini
 ?>
 
 <!-- profile.php -->
@@ -40,12 +45,32 @@ include '../db.php';
         </div>
         </div>
         <nav class="space-y-2 text-sm">
-            <a href="#" class="block text-gray-800 hover:font-semibold">Akun</a>
-            <a href="#" class="block text-gray-800 hover:font-semibold">Wishlist</a>
-            <a href="#" class="block text-gray-800 hover:font-semibold">Transaksi</a>
-            <a href="#" class="block text-gray-800 hover:font-semibold">Grafik Genre</a>
-            <a href="../config/logout.php" class="block text-red-500 hover:font-bold">Logout</a>
+          <a href="profile.php"
+             class="block px-3 py-2 rounded-l-lg
+             <?= $current_page == 'profile.php' ? 'border-l-4 border-green-500 bg-green-100 font-semibold text-green-700' : 'text-gray-800 hover:font-semibold' ?>">
+             Akun
+          </a>
+          <a href="wishlist.php"
+             class="block px-3 py-2 rounded-l-lg
+             <?= $current_page == 'wishlist.php' ? 'border-l-4 border-green-500 bg-green-100 font-semibold text-green-700' : 'text-gray-800 hover:font-semibold' ?>">
+             Wishlist
+          </a>
+          <a href="transaksi.php"
+             class="block px-3 py-2 rounded-l-lg
+             <?= $current_page == 'transaksi.php' ? 'border-l-4 border-green-500 bg-green-100 font-semibold text-green-700' : 'text-gray-800 hover:font-semibold' ?>">
+             Transaksi
+          </a>
+          <a href="grafik.php"
+             class="block px-3 py-2 rounded-l-lg
+             <?= $current_page == 'grafik.php' ? 'border-l-4 border-green-500 bg-green-100 font-semibold text-green-700' : 'text-gray-800 hover:font-semibold' ?>">
+             Grafik Genre
+          </a>
+          <a href="../config/logout.php"
+             class="block text-red-500 hover:font-bold px-3 py-2">
+             Logout
+          </a>
         </nav>
+
     </aside>
 
     <!-- Profile Content -->
