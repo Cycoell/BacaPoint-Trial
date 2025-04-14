@@ -44,23 +44,20 @@ $user = $_SESSION['user'];
 <!-- GAMBAR BESAR SECTION -->
 <section class="mt-10">
   <div class="container mx-auto max-w-4xl">
-  <div class="swiper mySwiper w-full overflow-hidden rounded-lg">
+    <div class="swiper mySwiper w-full overflow-hidden rounded-xl shadow-lg">
       <div class="swiper-wrapper">
-        <div class="swiper-slide px-0.5">
-          <img src="assets/1.jpg" alt="Slide 1" class="w-full h-[400px] object-cover rounded-lg"/>
-          </div>
-        <div class="swiper-slide px-0.5">
-          <img src="assets/2.jpg" alt="Slide 2" class="w-full h-[400px] object-cover rounded-lg"/>
-        </div>
-        <div class="swiper-slide px-0.5">
-          <img src="assets/3.jpg" alt="Slide 3" class="w-full h-[400px] object-cover rounded-lg"/>
-        </div>
-        <div class="swiper-slide px-0.5">
-          <img src="assets/4.jpg" alt="Slide 4" class="w-full h-[400px] object-cover rounded-lg"/>
-        </div>
-        <div class="swiper-slide px-0.5">
-          <img src="assets/5.jpg" alt="Slide 5" class="w-full h-[400px] object-cover rounded-lg"/>
-        </div>
+
+        <?php
+        $slides = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+        foreach ($slides as $slide) {
+          echo '
+            <div class="swiper-slide px-0.5 group transition-transform duration-300 ease-in-out">
+              <img src="assets/' . $slide . '" alt="Slide"
+                class="w-full h-[400px] object-cover rounded-xl transform group-hover:scale-105 transition duration-300 shadow-md" />
+            </div>';
+        }
+        ?>
+
       </div>
       <div class="swiper-pagination"></div>
     </div>

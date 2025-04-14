@@ -1,1 +1,1 @@
-<link rel="icon" type="image/png" href="assets/logo.png?v=2">
+<link rel="icon" type="image/png" href="/BacaPoint-Trial/assets/logo.png?v=2">

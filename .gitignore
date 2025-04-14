@@ -18,7 +18,7 @@ postcss.config.js
 uploads/
 
 # File database lokal (kalau ada)
-db.php
+
 
 # File lingkungan/credential (jika pakai)
 .env
