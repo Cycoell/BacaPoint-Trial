@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Apr 2025 pada 00.49
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: Apr 14, 2025 at 10:16 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `book_list`
+--
+
+CREATE TABLE `book_list` (
+  `id` int(11) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `tahun` int(4) DEFAULT NULL,
+  `genre` varchar(100) DEFAULT NULL,
+  `cover_path` varchar(255) DEFAULT NULL,
+  `pdf_path` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `book_list`
+--
+
+INSERT INTO `book_list` (`id`, `judul`, `author`, `tahun`, `genre`, `cover_path`, `pdf_path`, `created_at`) VALUES
+(1, '48 Hukum Kekuasaan', 'Robert Greene', 1998, 'Self-Development', 'assets/buku/48hukumkekuasaan.png', 'assets/buku/48hukumkekuasaan.pdf', '2025-04-14 06:15:45'),
+(2, 'Sejarah Dunia Kuno', 'Susan Wise Bauer', 2010, 'Sejarah', 'assets/buku/Sejarahduniakunodaricer.png', 'assets/buku/Sejarahduniakunodaricer.df', '2025-04-14 07:08:25'),
+(3, 'Building a Second Brain', 'Tiago Forte', 2022, 'Productivity', 'assets/buku/BuildingaSecondBrainAP.png', 'assets/buku/BuildingaSecondBrainAP.pdf', '2025-04-14 07:10:22'),
+(4, 'Storyworthy', 'Matthew Dicks', 2018, 'Self-Development', 'assets/buku/Storyworthy.png', 'assets/buku/Storyworthy.pdf', '2025-04-14 07:12:26'),
+(5, 'Retorika Seni Berbicara', 'Aristoteles', 2000, 'Filsafat', 'assets/buku/RetorikaSeniBerbicara.png', 'assets/buku/RetorikaSeniBerbicara.pdf', '2025-04-14 07:15:19'),
+(6, 'The Art Of War Sun Tzu', 'James Clavell', 2002, 'Self-Development', 'assets/buku/TheArtOfWarSunTzuSeni.png', 'assets/buku/TheArtOfWarSunTzuSeni.pdf', '2025-04-14 07:17:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -36,7 +65,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
@@ -47,18 +76,30 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
 --
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `book_list`
+--
+ALTER TABLE `book_list`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `book_list`
+--
+ALTER TABLE `book_list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
