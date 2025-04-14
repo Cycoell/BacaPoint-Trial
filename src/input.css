@@ -55,3 +55,13 @@
     @apply mt-5 border-2 border-white bg-transparent text-white;
   }
 }
+
+
+  .nav-btn {
+    @apply block px-3 py-2 rounded-l-lg w-full text-left text-gray-800 hover:font-semibold;
+  }
+
+  .nav-btn.active {
+    @apply border-l-4 border-green-500 bg-green-100 font-semibold text-green-700;
+  }
+

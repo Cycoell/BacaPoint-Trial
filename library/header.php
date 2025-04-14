@@ -40,7 +40,7 @@ if (session_status() === PHP_SESSION_NONE) {
             Masuk
           </a>
         <?php else: ?>
-          <a href="pages/profile.php" class="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-all duration-300">
+          <a href="pages/profile.php" class="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 ring-1 ring-inset ring-green-600 rounded-full hover:bg-green-200 transition-all duration-300">
             <img src="/BacaPoint-Trial/assets/icon_person.png" class="w-6 h-6 rounded-full object-cover" />
             <span class="text-sm"><?php echo $_SESSION['user']['name']; ?></span>
           </a>
