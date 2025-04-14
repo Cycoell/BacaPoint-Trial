@@ -8,7 +8,11 @@ $filePath = "assets/" . $fileName;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Baca Point</title>
+  <title>BacaPoint</title>
+  
+  <!--Link Icon  -->
+  <?php include '../library/icon.php'; ?>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>

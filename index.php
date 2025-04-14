@@ -12,7 +12,9 @@ include 'db.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BacaPoint</title>
-    <link rel="icon" type="image/png" href="assets/logo_bawah.png?v=2">
+
+    <!--Link Icon  -->
+    <?php include 'library/icon.php'; ?>
     
     <!-- Link ke file CSS -->
     <link href="css/styles.css" rel="stylesheet">
