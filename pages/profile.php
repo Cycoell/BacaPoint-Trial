@@ -83,6 +83,17 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     </main>
   </div>
 
+  <!-- Modal Konfirmasi -->
+<div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+    <p class="text-lg font-semibold mb-4">Apakah kamu yakin ingin menghapus buku ini?</p>
+    <div class="space-x-4">
+      <button id="confirmYes" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Ya, Hapus</button>
+      <button id="confirmNo" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Batal</button>
+    </div>
+  </div>
+</div>
+
   <script>
     // Fungsi untuk memuat konten berdasarkan nama file (tanpa .php)
     function loadContent(page) {

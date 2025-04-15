@@ -36,17 +36,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 //   Fungsi Hapus Buku
-  function hapusBuku(id) {
-    if (confirm("Apakah Anda yakin ingin menghapus buku ini dari library?")) {
-      fetch(`../config/hapus_buku.php?id=${id}`)
-        .then(response => response.text())
-        .then(responseText => {
-          alert(responseText);
-          loadContent('collection'); // ini untuk reload konten collection-nya
-        })
-        .catch(error => {
-          alert("Terjadi kesalahan saat menghapus.");
-          console.error(error);
-        });
-    }
+let bukuIdToDelete = null;
+
+function hapusBuku(id) {
+  bukuIdToDelete = id;
+  document.getElementById('confirmModal').classList.remove('hidden');
+}
+
+document.getElementById('confirmYes').addEventListener('click', () => {
+  if (bukuIdToDelete !== null) {
+    fetch(`../config/hapus_buku.php?id=${bukuIdToDelete}`)
+      .then(response => response.text())
+      .then(responseText => {
+        alert(responseText);
+        loadContent('collection'); // ini tetap dipakai untuk refresh
+      })
+      .catch(error => {
+        alert("Terjadi kesalahan saat menghapus.");
+        console.error(error);
+      });
+    document.getElementById('confirmModal').classList.add('hidden');
   }
+});
+
+document.getElementById('confirmNo').addEventListener('click', () => {
+  bukuIdToDelete = null;
+  document.getElementById('confirmModal').classList.add('hidden');
+});
