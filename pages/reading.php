@@ -18,23 +18,15 @@ $filePath = "assets/" . $fileName;
 
   <!-- Link PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="../css/styles.css" rel="stylesheet">
 
 </head>
 <body class="bg-gray-300 font-sans">
 
-<!--LINK HEADER  -->
-<?php include '../library/header.php'; ?>
-<!--LINK HEADER  -->
-
-
   <div class="flex flex-col min-h-screen">
-    
     <!-- Header -->
     <header class="bg-white px-4 py-2 flex justify-between items-center shadow relative">
 
-      <div class="flex items-center space-x-2 flex-1">
+      <div class="flex flex-1 items-center space-x-2">
         <button onclick="window.history.back()" class="text-xl font-bold">&larr;</button>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
@@ -47,7 +39,7 @@ $filePath = "assets/" . $fileName;
 
       <div class="text-center text-sm text-gray-500 items-center">(Judul Buku)</div>
 
-      <div class="flex items-center space-x-2 flex-1 justify-end">
+      <div class="flex flex-1 justify-end items-center space-x-2">
         <div class="flex items-center border rounded px-2 py-1">
           <button onclick="zoomOut()">−</button>
           <span id="zoomLevel" class="px-2">100%</span>
@@ -59,10 +51,10 @@ $filePath = "assets/" . $fileName;
         </div>
 
       </div>
-    </div>
+    </header>
 
     <!-- PDF Viewer -->
-    <main class="flex-auto bg-gray-200 overflow-auto flex justify-center items-center">
+    <main class="flex-grow bg-gray-200 overflow-auto flex justify-center items-center">
       <canvas id="pdfCanvas" class="bg-white shadow-lg"></canvas>
     </main>
 
@@ -149,7 +141,7 @@ $filePath = "assets/" . $fileName;
       .catch(error => {
         console.error("Terjadi kesalahan:", error);
       });
-      
   </script>
 </body>
 </html>
+''
