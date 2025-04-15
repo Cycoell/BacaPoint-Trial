@@ -14,5 +14,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "bacapoint-trial": "file:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cycoell/BacaPoint-Trial.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cycoell/BacaPoint-Trial/issues"
+  },
+  "homepage": "https://github.com/Cycoell/BacaPoint-Trial#readme",
   "description": ""
 }
