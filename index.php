@@ -28,9 +28,9 @@ $result = mysqli_query($conn, $query);
 </head>
 <body class="bg-slate-300">
 
-   <!--LINK HEADER  -->
-   <?php include 'library/header.php'; ?>
-   <!--LINK HEADER  -->
+  <!--LINK HEADER  -->
+  <?php include 'library/header.php'; ?>
+  <!--LINK HEADER  -->
 
   <!-- GAMBAR BESAR SECTION -->
   <section class="mt-10">
