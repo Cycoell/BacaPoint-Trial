@@ -28,9 +28,9 @@ $result = mysqli_query($conn, $query);
 </head>
 <body class="bg-slate-300">
 
-   <!--LINK HEADER  -->
-   <?php include 'library/header.php'; ?>
-   <!--LINK HEADER  -->
+  <!--LINK HEADER  -->
+  <?php include 'library/header.php'; ?>
+  <!--LINK HEADER  -->
 
   <!-- GAMBAR BESAR SECTION -->
   <section class="mt-10">
@@ -71,7 +71,7 @@ $result = mysqli_query($conn, $query);
         ?>
           <!-- Card dari database (klik ke detail buku) -->
           <a href="detail.php?id=<?php echo $bookId; ?>" class="block">
-            <div class="w-48 h-80 flex-shrink-0 bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
+            <div class="w-44 h-80 flex-none  bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
               <div class="h-48 w-full overflow-hidden rounded mb-2">
                 <img src="<?php echo $row['cover_path']; ?>" alt="Cover" class="w-full h-full object-cover" />
               </div>
@@ -88,7 +88,6 @@ $result = mysqli_query($conn, $query);
       </div>
     </div>
   </section>
-
   <!-- BAR SECTION -->
  
   <!-- LINK FOOTER -->

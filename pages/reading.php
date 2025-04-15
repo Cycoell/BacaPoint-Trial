@@ -15,12 +15,20 @@ $filePath = "assets/" . $fileName;
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="../css/styles.css" rel="stylesheet">
+
 </head>
 <body class="bg-gray-300 font-sans">
 
+<!--LINK HEADER  -->
+<?php include '../library/header.php'; ?>
+<!--LINK HEADER  -->
+
+
   <div class="flex flex-col min-h-screen">
+    
     <!-- Header -->
-    <header class="bg-white px-4 py-2 flex justify-between items-center shadow">
+    <div class="bg-white px-4 py-2 flex justify-between items-center shadow">
       <div class="flex items-center space-x-2">
         <button onclick="window.history.back()" class="text-xl font-bold">&larr;</button>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -38,10 +46,10 @@ $filePath = "assets/" . $fileName;
           <span>&#128100;</span>
         </div>
       </div>
-    </header>
+    </div>
 
     <!-- PDF Viewer -->
-    <main class="flex-grow bg-gray-200 overflow-auto flex justify-center items-center">
+    <main class="flex-auto bg-gray-200 overflow-auto flex justify-center items-center">
       <canvas id="pdfCanvas" class="bg-white shadow-lg"></canvas>
     </main>
 
@@ -128,7 +136,7 @@ $filePath = "assets/" . $fileName;
       .catch(error => {
         console.error("Terjadi kesalahan:", error);
       });
+      
   </script>
 </body>
 </html>
-''
