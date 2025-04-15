@@ -1,5 +1,5 @@
 <?php
-include '/BacaPoint-Trial/db.php'; // Ubah sesuai path file koneksi kamu
+include '../db.php'; // Ubah sesuai path file koneksi kamu
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $id     = $_POST['id'];
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $author = mysqli_real_escape_string($conn, $author);
   $genre  = mysqli_real_escape_string($conn, $genre);
 
-  $sql = "UPDATE books SET judul='$judul', tahun='$tahun', author='$author', genre='$genre' WHERE id='$id'";
+  $sql = "UPDATE books SET judul='$judul', author='$author', tahun='$tahun', genre='$genre' WHERE id='$id'";
 
   if (mysqli_query($conn, $sql)) {
     header("Location: profile.php"); // Redirect balik ke halaman koleksi

@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 
 <!-- FOOTER SECTION -->
+<section class="mt-6">
 <footer class="bg-white text-gray-800 py-10 border-t">
   <div class="max-w-6xl mx-auto px-4">
     <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-sm mb-10">
@@ -70,4 +71,5 @@ if (session_status() === PHP_SESSION_NONE) {
     <p class="text-center text-gray-400 text-sm">©Copyright. All rights reserved.</p>
   </div>
 </footer>
+</section>
 <!-- FOOTER SECTION -->

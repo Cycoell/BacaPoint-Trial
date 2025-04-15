@@ -102,6 +102,10 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     });
   </script>
 
+<!-- Link js hapus dan edit buku -->
+<script src="../src/hps_edit.js"></script>
+
+<!-- Link js navbar -->
 <script src="../src/nav.js"></script>
 
 </body>
