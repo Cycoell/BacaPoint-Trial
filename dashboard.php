@@ -113,58 +113,37 @@ $user = $_SESSION['user'];
 
 
 <!-- BAR SECTION -->
-<section class="mt-3">
-  <div class="container mx-auto max-w-4xl px-5 py-6 bg-slate-100 rounded-lg">
-    <div class="overflow-x-auto">
-      <div class="flex gap-4 whitespace-nowrap justify-center">
-        <!-- Card 1 -->
-        <div class="w-48 h-80 flex-shrink-0 bg-slate-300 rounded-lg shadow p-3">
-          <div class="h-48 w-full overflow-hidden rounded mb-2">
-            <img src="assets/1.jpg" alt="Image" class="w-full h-full object-cover" />
-          </div>
-        <div class="space-y-1">
-          <h3 class="text-base font-semibold">Judul Manga</h3>
-          <p class="text-xs text-gray-500">2024 • Action • Author</p>
-        </div>
-      </div>
-      
-      <!-- Card 1 -->
-      <div class="w-48 h-80 flex-shrink-0 bg-slate-300 rounded-lg shadow p-3">
-          <div class="h-48 w-full overflow-hidden rounded mb-2">
-            <img src="assets/1.jpg" alt="Image" class="w-full h-full object-cover" />
-          </div>
-        <div class="space-y-1">
-          <h3 class="text-base font-semibold">Judul Manga</h3>
-          <p class="text-xs text-gray-500">2024 • Action • Author</p>
-        </div>
-      </div>
+<section class="mt-2">
+    <div class="container mx-auto max-w-4xl px-5 py-6 bg-slate-100 rounded-lg">
+      <div class="overflow-x-auto">
+        <div class="flex gap-4 whitespace-nowrap justify-center">
 
-      <!-- Card 1 -->
-      <div class="w-48 h-80 flex-shrink-0 bg-slate-300 rounded-lg shadow p-3">
-          <div class="h-48 w-full overflow-hidden rounded mb-2">
-            <img src="assets/1.jpg" alt="Image" class="w-full h-full object-cover" />
-          </div>
-        <div class="space-y-1">
-          <h3 class="text-base font-semibold">Judul Manga</h3>
-          <p class="text-xs text-gray-500">2024 • Action • Author</p>
-        </div>
-      </div>
+        <?php
+        $count = 0; // Mulai counter
+        while (($row = mysqli_fetch_assoc($result)) && $count < 4) {
+          $count++; // Tambah counter setiap loop
+          $bookId = $row['id']; // Asumsikan kamu punya kolom id
+        ?>
+          <!-- Card dari database (klik ke detail buku) -->
+          <a href="detail.php?id=<?php echo $bookId; ?>" class="block">
+            <div class="w-44 h-80 flex-none  bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
+              <div class="h-48 w-full overflow-hidden rounded mb-2">
+                <img src="<?php echo $row['cover_path']; ?>" alt="Cover" class="w-full h-full object-cover" />
+              </div>
+              <div class="text-wrap space-y-1">
+                <h3 class="text-base font-semibold"><?php echo $row['judul']; ?></h3>
+                <p class="text-xs text-gray-500">
+                  <?php echo $row['tahun']; ?> • <?php echo $row['genre']; ?> • <?php echo $row['author']; ?>
+                </p>
+              </div>
+            </div>
+          </a>
+        <?php } ?>
 
-      <!-- Card 1 -->
-      <div class="w-48 h-80 flex-shrink-0 bg-slate-300 rounded-lg shadow p-3">
-          <div class="h-48 w-full overflow-hidden rounded mb-2">
-            <img src="assets/1.jpg" alt="Image" class="w-full h-full object-cover" />
-          </div>
-        <div class="space-y-1">
-          <h3 class="text-base font-semibold">Judul Manga</h3>
-          <p class="text-xs text-gray-500">2024 • Action • Author</p>
-        </div>
       </div>
- 
     </div>
-  </div>
-</section>
-<!-- END BAR SECTION -->
+  </section>
+  <!-- BAR SECTION -->
 
 <!-- LIBRARY SECTION -->
  
