@@ -13,30 +13,43 @@ $filePath = "assets/" . $fileName;
   <!--Link Icon  -->
   <?php include '../library/icon.php'; ?>
   
+  <!-- Link ke file CSS -->
+  <link href="../css/styles.css" rel="stylesheet"> 
+
+  <!-- Link PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
 <body class="bg-gray-300 font-sans">
 
   <div class="flex flex-col min-h-screen">
     <!-- Header -->
-    <header class="bg-white px-4 py-2 flex justify-between items-center shadow">
-      <div class="flex items-center space-x-2">
+    <header class="bg-white px-4 py-2 flex justify-between items-center shadow relative">
+
+      <div class="flex items-center space-x-2 flex-1">
         <button onclick="window.history.back()" class="text-xl font-bold">&larr;</button>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </div>
-      <div class="text-center text-sm text-gray-500">(Judul Buku)</div>
-      <div class="flex items-center space-x-2">
+
+      <div class="w-20 h-24 left-16 ml-10 absolute">
+        <img src="../assets/logo_samping.png" alt="Logo" class="h-full w-full object-contain" />
+      </div>
+
+      <div class="text-center text-sm text-gray-500 items-center">(Judul Buku)</div>
+
+      <div class="flex items-center space-x-2 flex-1 justify-end">
         <div class="flex items-center border rounded px-2 py-1">
           <button onclick="zoomOut()">−</button>
           <span id="zoomLevel" class="px-2">100%</span>
           <button onclick="zoomIn()">+</button>
         </div>
+
         <div class="w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center">
           <span>&#128100;</span>
         </div>
+
       </div>
     </header>
 
