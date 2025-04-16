@@ -66,12 +66,12 @@ $result = mysqli_query($conn, $query);
         <?php
         $count = 0; // Mulai counter
         while (($row = mysqli_fetch_assoc($result)) && $count < 4) {
-          $count++; // Tambah counter setiap loop
-          $bookId = $row['id']; // Asumsikan kamu punya kolom id
+            $count++; // Tambah counter setiap loop
+            $bookId = $row['id']; // Asumsikan kamu punya kolom id
         ?>
           <!-- Card dari database (klik ke detail buku) -->
-          <a href="detail.php?id=<?php echo $bookId; ?>" class="block">
-            <div class="w-44 h-80 flex-none  bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
+          <a href="/BacaPoint-Trial/pages/reading.php?id=<?php echo $bookId; ?>" class="block">
+            <div class="w-44 h-80 flex-none bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
               <div class="h-48 w-full overflow-hidden rounded mb-2">
                 <img src="<?php echo $row['cover_path']; ?>" alt="Cover" class="w-full h-full object-cover" />
               </div>

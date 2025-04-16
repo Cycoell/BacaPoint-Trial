@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
       <!-- Logo -->
       <div class="w-[140px] h-[140px] -top-8 left-8 absolute">
-        <a href="<?php echo isset($_SESSION['user']) ? '/BacaPoint-Trial/dashboard.php' : 'index.php'; ?>" 
+        <a href="<?php echo isset($_SESSION['user']) ? '/BacaPoint-Trial/dashboard.php' : '/BacaPoint-Trial/index.php'; ?>" 
            class="transition-transform duration-300 hover:scale-110">
           <img src="/BacaPoint-Trial/assets/logo_samping.png" alt="BacaPoint" class="bg-contain w-full h-full object-contain" />
         </a>
