@@ -26,75 +26,79 @@ $result = mysqli_query($conn, $query);
 
 
 </head>
-<body class="bg-slate-300">
+<body class="bg-slate-300 bg-no-repeat bg-cover relative" style="background-image: url('assets/buku.jpg')"> 
 
-  <!--LINK HEADER  -->
-  <?php include 'library/header.php'; ?>
-  <!--LINK HEADER  -->
+  <!-- Overlay for blur effect -->
+  <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
 
-  <!-- GAMBAR BESAR SECTION -->
-  <section class="mt-10">
-    <div class="container mx-auto max-w-4xl">
-      <div class="swiper mySwiper w-full overflow-hidden rounded-xl shadow-lg">
-        <div class="swiper-wrapper">
+  <!-- Main content -->
+  <div class="relative z-10">
+    <!--LINK HEADER  -->
+    <?php include 'library/header.php'; ?>
+    <!--LINK HEADER  -->
+
+    <!-- GAMBAR BESAR SECTION -->
+    <section class="mt-10">
+      <div class="container mx-auto max-w-4xl">
+        <div class="swiper mySwiper w-full overflow-hidden rounded-xl shadow-lg">
+          <div class="swiper-wrapper">
+
+            <?php
+            $slides = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+            foreach ($slides as $slide) {
+              echo '
+                <div class="swiper-slide px-0.5 group transition-transform duration-300 ease-in-out">
+                  <img src="assets/' . $slide . '" alt="Slide"
+                    class="w-full h-[400px] object-cover rounded-xl transform group-hover:scale-105 transition duration-300 shadow-md" />
+                </div>';
+            }
+            ?>
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BAR SECTION -->
+    <section class="mt-2">
+      <div class="container mx-auto max-w-4xl px-5 py-6 bg-slate-100 rounded-lg">
+        <div class="overflow-x-auto">
+          <div class="flex gap-4 whitespace-nowrap justify-center">
 
           <?php
-          $slides = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
-          foreach ($slides as $slide) {
-            echo '
-              <div class="swiper-slide px-0.5 group transition-transform duration-300 ease-in-out">
-                <img src="assets/' . $slide . '" alt="Slide"
-                  class="w-full h-[400px] object-cover rounded-xl transform group-hover:scale-105 transition duration-300 shadow-md" />
-              </div>';
-          }
+          $count = 0; // Mulai counter
+          while (($row = mysqli_fetch_assoc($result)) && $count < 4) {
+              $count++; // Tambah counter setiap loop
+              $bookId = $row['id']; // Asumsikan kamu punya kolom id
           ?>
+            <!-- Card dari database (klik ke detail buku) -->
+            <a href="/BacaPoint-Trial/pages/reading.php?id=<?php echo $bookId; ?>" class="block">
+              <div class="w-44 h-80 flex-none bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
+                <div class="h-48 w-full overflow-hidden rounded mb-2">
+                  <img src="<?php echo $row['cover_path']; ?>" alt="Cover" class="w-full h-full object-cover" />
+                </div>
+                <div class="text-wrap space-y-1">
+                  <h3 class="text-base font-semibold"><?php echo $row['judul']; ?></h3>
+                  <p class="text-xs text-gray-500">
+                    <?php echo $row['tahun']; ?> • <?php echo $row['genre']; ?> • <?php echo $row['author']; ?>
+                  </p>
+                </div>
+              </div>
+            </a>
+          <?php } ?>
 
         </div>
-        <div class="swiper-pagination"></div>
       </div>
-    </div>
-  </section>
+    </section>
+    <!-- BAR SECTION -->
+   
+    <!-- LINK FOOTER -->
+    <?php include 'library/footer.php'; ?>
+    <!-- LINK FOOTER -->
 
-
-
-  <!-- BAR SECTION -->
-  <section class="mt-2">
-    <div class="container mx-auto max-w-4xl px-5 py-6 bg-slate-100 rounded-lg">
-      <div class="overflow-x-auto">
-        <div class="flex gap-4 whitespace-nowrap justify-center">
-
-        <?php
-        $count = 0; // Mulai counter
-        while (($row = mysqli_fetch_assoc($result)) && $count < 4) {
-            $count++; // Tambah counter setiap loop
-            $bookId = $row['id']; // Asumsikan kamu punya kolom id
-        ?>
-          <!-- Card dari database (klik ke detail buku) -->
-          <a href="/BacaPoint-Trial/pages/reading.php?id=<?php echo $bookId; ?>" class="block">
-            <div class="w-44 h-80 flex-none bg-slate-300 rounded-lg shadow p-3 mr-4 hover:shadow-lg transition">
-              <div class="h-48 w-full overflow-hidden rounded mb-2">
-                <img src="<?php echo $row['cover_path']; ?>" alt="Cover" class="w-full h-full object-cover" />
-              </div>
-              <div class="text-wrap space-y-1">
-                <h3 class="text-base font-semibold"><?php echo $row['judul']; ?></h3>
-                <p class="text-xs text-gray-500">
-                  <?php echo $row['tahun']; ?> • <?php echo $row['genre']; ?> • <?php echo $row['author']; ?>
-                </p>
-              </div>
-            </div>
-          </a>
-        <?php } ?>
-
-      </div>
-    </div>
-  </section>
-  <!-- BAR SECTION -->
- 
-  <!-- LINK FOOTER -->
-  <?php include 'library/footer.php'; ?>
-  <!-- LINK FOOTER -->
-
-  <!--Link ke file JS -->
-  <script src="src/main.js"></script>
+    <!--Link ke file JS -->
+    <script src="src/main.js"></script>
+  </div>
 </body>
 </html>
