@@ -38,6 +38,9 @@ if ($bookId > 0) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BacaPoint</title>
   
+  <!--Link Icon  -->
+  <?php include '../library/icon.php'; ?>
+
   <!-- Link ke file CSS -->
   <link href="../css/styles.css" rel="stylesheet"> 
 
@@ -45,27 +48,27 @@ if ($bookId > 0) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
 </head>
-<body class="bg-gray-300 font-sans">
-
-  <div class="flex flex-col min-h-screen">
+<body class="bg-gray-300 font-sans w-screen h-screen overflow-hidden">
+  <div class="flex flex-col h-screen">
     <!-- Header -->
-    <header class="bg-white px-4 py-2 flex justify-between items-center shadow relative">
+    <header class="bg-white px-4 py-2 flex justify-between items-center shadow">
       <div class="flex flex-1 items-center space-x-2">
         <button onclick="window.history.back()" class="text-xl font-bold">&larr;</button>
       </div>
-
-      <div class="text-center text-sm text-gray-500 items-center">Baca Buku</div>
+      <div class="text-center text-sm text-gray-500">Baca Buku</div>
     </header>
 
     <!-- PDF Viewer -->
-    <main class="flex-grow bg-gray-200 overflow-auto flex justify-center items-center">
+    <main id="pdfContainer" class="flex-grow bg-gray-200 overflow-auto flex justify-center items-center">
       <canvas id="pdfCanvas" class="bg-white shadow-lg"></canvas>
     </main>
 
     <!-- Footer -->
     <footer class="bg-white p-4 flex justify-center items-center space-x-4">
       <button id="prevPage" class="bg-green-500 text-white px-4 py-2 rounded">Sebelumnya</button>
+      <button onclick="zoomOut()" class="bg-blue-500 text-white px-4 py-2 rounded">-</button>
       <span id="pageInfo" class="text-gray-700">Page 1 of 1</span>
+      <button onclick="zoomIn()" class="bg-blue-500 text-white px-4 py-2 rounded">+</button>
       <button id="nextPage" class="bg-green-500 text-white px-4 py-2 rounded">Selanjutnya</button>
     </footer>
   </div>
@@ -122,6 +125,25 @@ if ($bookId > 0) {
       renderPage(pageNum);
     }
 
+    function resizeCanvasToFitContainer() {
+      if (!pdfDoc) return;
+      const container = document.getElementById('pdfContainer');
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+
+      // Buat viewport sementara untuk hitung ukuran asli
+      pdfDoc.getPage(pageNum).then(page => {
+        const tempViewport = page.getViewport({ scale: 1.0 });
+        const scaleX = containerWidth / tempViewport.width;
+        const scaleY = containerHeight / tempViewport.height;
+
+        scale = Math.min(scaleX, scaleY);
+        renderPage(pageNum);
+      });
+    }
+
+    window.addEventListener('resize', resizeCanvasToFitContainer);
+
     // Load PDF
     const filePath = "<?php echo $filePath; ?>";
     fetch(filePath)
@@ -134,6 +156,7 @@ if ($bookId > 0) {
         pdfjsLib.getDocument(typedarray).promise.then(pdf => {
           pdfDoc = pdf;
           renderPage(pageNum);
+          setTimeout(resizeCanvasToFitContainer, 200); // wait for layout to settle
         });
       })
       .catch(error => {
