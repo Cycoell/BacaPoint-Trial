@@ -84,8 +84,9 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
   </div>
 
   <!-- Modal Konfirmasi -->
-<div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 items-center hidden z-50">
-  <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full mx-auto my-auto text-center">
+  <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+              bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
     <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus buku ini?</p>
     <div class="flex justify-center space-x-4">
       <button id="confirmYes" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Ya</button>
@@ -93,6 +94,7 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     </div>
   </div>
 </div>
+
 
 
   <script>
