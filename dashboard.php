@@ -3,7 +3,9 @@
 <?php
 // Mulai sesi
 session_start();
-
+include 'db.php';
+$query = "SELECT * FROM book_list";
+$result = mysqli_query($conn, $query);
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['user'])) {
     // Jika belum login, redirect ke halaman login

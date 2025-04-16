@@ -63,3 +63,27 @@ document.getElementById('confirmNo').addEventListener('click', () => {
   bukuIdToDelete = null;
   document.getElementById('confirmModal').classList.add('hidden');
 });
+
+
+// Fungsi untuk menampilkan modal konfirmasi hapus
+function showConfirmModal(callback) {
+    const modal = document.getElementById("confirmModal");
+    const yesBtn = document.getElementById("confirmYes");
+    const noBtn = document.getElementById("confirmNo");
+  
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  
+    yesBtn.onclick = () => {
+      modal.classList.remove("flex");
+      modal.classList.add("hidden");
+      callback(true);
+    };
+  
+    noBtn.onclick = () => {
+      modal.classList.remove("flex");
+      modal.classList.add("hidden");
+      callback(false);
+    };
+  }
+  
