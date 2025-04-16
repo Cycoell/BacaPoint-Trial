@@ -1,18 +1,3 @@
-<!-- <h2 class="text-xl font-semibold mb-6">Koleksi Buku</h2>
-<div class="grid grid-cols-2 gap-6">
-  <div class="bg-white border rounded shadow-sm p-4">
-    <h3 class="font-bold text-lg">Laskar Pelangi</h3>
-    <p class="text-sm text-gray-500">Andrea Hirata</p>
-    <button class="mt-2 text-blue-600 text-sm underline">Baca Sekarang</button>
-  </div>
-  <div class="bg-white border rounded shadow-sm p-4">
-    <h3 class="font-bold text-lg">Bumi Manusia</h3>
-    <p class="text-sm text-gray-500">Pramoedya Ananta Toer</p>
-    <button class="mt-2 text-blue-600 text-sm underline">Baca Sekarang</button>
-  </div> -->
-  <!-- Tambah buku lainnya sesuai data -->
-<!-- </div> -->
-
 <?php
 include '../db.php'; // Sesuaikan dengan file koneksi kamu
 
@@ -78,11 +63,24 @@ if (!$result) {
       </div>
     </form>
   <?php } ?>
+  <!-- Modal Konfirmasi Hapus -->
+  <div id="confirmModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-md shadow-lg w-1/3">
+      <h2 class="text-xl font-semibold mb-4">Konfirmasi Hapus</h2>
+      <p>Apakah Anda yakin ingin menghapus buku ini?</p>
+      <div class="mt-4 text-right">
+        <button id="cancelDelete" class="bg-gray-300 px-4 py-2 rounded">Batal</button>
+        <button id="confirmDelete" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded ml-2">Hapus</button>
+      </div>
+    </div>
+  </div>
 </div>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  let currentId = null;
+
+  // Fungsi untuk mengaktifkan mode edit
   window.enableEdit = function(id) {
     const form = document.getElementById('form-' + id);
     const inputs = form.querySelectorAll('input[type="text"]');
@@ -99,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     actions.classList.add('hidden');
   }
 
+  // Fungsi untuk membatalkan mode edit
   window.cancelEdit = function(id) {
     const form = document.getElementById('form-' + id);
     const inputs = form.querySelectorAll('input[type="text"]');
@@ -115,6 +114,37 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.classList.add('hidden');
     actions.classList.remove('hidden');
   }
+
+  // Fungsi untuk menghapus buku dengan modal konfirmasi
+  window.hapusBuku = function(id) {
+    currentId = id; // Simpan ID buku yang akan dihapus
+    const modal = document.getElementById('confirmModal');
+    modal.classList.remove('hidden'); // Menampilkan modal konfirmasi
+  };
+
+  // Batal menghapus
+  document.getElementById('cancelDelete').addEventListener('click', function() {
+    const modal = document.getElementById('confirmModal');
+    modal.classList.add('hidden'); // Menyembunyikan modal
+  });
+
+  // Konfirmasi hapus
+  document.getElementById('confirmDelete').addEventListener('click', function() {
+    if (currentId !== null) {
+      fetch(`/BacaPoint-Trial/config/hapus_buku.php?id=${currentId}`)
+        .then(res => res.text())
+        .then(response => {
+          alert(response);
+          location.reload(); // Reload halaman setelah hapus
+        })
+        .catch(err => {
+          alert("Terjadi kesalahan saat menghapus.");
+          console.error(err);
+        });
+    }
+    // Setelah konfirmasi hapus, sembunyikan modal
+    const modal = document.getElementById('confirmModal');
+    modal.classList.add('hidden');
+  });
 });
 </script>
-
