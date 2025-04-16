@@ -1,6 +1,34 @@
 <?php
-$fileName = isset($_GET['file']) ? $_GET['file'] : 'default.pdf';
-$filePath = "assets/" . $fileName;
+session_start();
+include '../db.php'; // Pastikan path ini benar sesuai dengan lokasi db.php
+
+// Ambil ID buku dari query string
+$bookId = isset($_GET['id']) ? $_GET['id'] : 0;
+
+// Pastikan ID valid
+if ($bookId > 0) {
+    // Query untuk mengambil path PDF berdasarkan ID menggunakan prepared statement
+    $sql = "SELECT pdf_path FROM book_list WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die('Prepare failed: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $bookId); // Bind parameter untuk ID
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        // Menambahkan path lengkap untuk mengakses file PDF
+        $filePath = "/bacapoint-trial/" . $row['pdf_path'];
+    } else {
+        $filePath = '/bacapoint-trial/assets/buku/default.pdf'; // Jika tidak ditemukan, beri file default
+    }
+    $stmt->close();
+} else {
+    $filePath = '/bacapoint-trial/assets/buku/default.pdf'; // Jika ID tidak valid, beri file default
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -10,13 +38,10 @@ $filePath = "assets/" . $fileName;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BacaPoint</title>
   
-  <!--Link Icon  -->
-  <?php include '../library/icon.php'; ?>
-  
   <!-- Link ke file CSS -->
   <link href="../css/styles.css" rel="stylesheet"> 
 
-  <!-- Link PDF -->
+  <!-- Link PDF.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
 </head>
@@ -25,32 +50,11 @@ $filePath = "assets/" . $fileName;
   <div class="flex flex-col min-h-screen">
     <!-- Header -->
     <header class="bg-white px-4 py-2 flex justify-between items-center shadow relative">
-
       <div class="flex flex-1 items-center space-x-2">
         <button onclick="window.history.back()" class="text-xl font-bold">&larr;</button>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
       </div>
 
-      <div class="w-20 h-24 left-16 ml-10 absolute">
-        <img src="../assets/logo_samping.png" alt="Logo" class="h-full w-full object-contain" />
-      </div>
-
-      <div class="text-center text-sm text-gray-500 items-center">(Judul Buku)</div>
-
-      <div class="flex flex-1 justify-end items-center space-x-2">
-        <div class="flex items-center border rounded px-2 py-1">
-          <button onclick="zoomOut()">−</button>
-          <span id="zoomLevel" class="px-2">100%</span>
-          <button onclick="zoomIn()">+</button>
-        </div>
-
-        <div class="w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center">
-          <span>&#128100;</span>
-        </div>
-
-      </div>
+      <div class="text-center text-sm text-gray-500 items-center">Baca Buku</div>
     </header>
 
     <!-- PDF Viewer -->
@@ -111,22 +115,16 @@ $filePath = "assets/" . $fileName;
     function zoomIn() {
       scale += 0.1;
       renderPage(pageNum);
-      updateZoomDisplay();
     }
 
     function zoomOut() {
       scale = Math.max(0.5, scale - 0.1);
       renderPage(pageNum);
-      updateZoomDisplay();
-    }
-
-    function updateZoomDisplay() {
-      document.getElementById("zoomLevel").textContent = Math.round(scale * 100) + "%";
     }
 
     // Load PDF
-    const fileName = "<?php echo $filePath; ?>";
-    fetch(fileName)
+    const filePath = "<?php echo $filePath; ?>";
+    fetch(filePath)
       .then(response => {
         if (!response.ok) throw new Error("File tidak ditemukan");
         return response.arrayBuffer();
@@ -144,4 +142,3 @@ $filePath = "assets/" . $fileName;
   </script>
 </body>
 </html>
-''
