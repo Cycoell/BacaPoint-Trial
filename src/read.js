@@ -35,13 +35,16 @@ document.getElementById("prevPage").addEventListener("click", () => {
   if (pageNum <= 1) return;
   pageNum--;
   queueRenderPage(pageNum);
+  updateProgress();  // Update progress setelah berpindah halaman
 });
 
 document.getElementById("nextPage").addEventListener("click", () => {
   if (pageNum >= pdfDoc.numPages) return;
   pageNum++;
   queueRenderPage(pageNum);
+  updateProgress();  // Update progress setelah berpindah halaman
 });
+
 
 function resetZoom() {
   scale = initialScale;
@@ -116,3 +119,51 @@ fetch(filePath)
   .catch(error => {
     console.error("Terjadi kesalahan:", error);
   });
+
+  function updateProgress() {
+    const bookId = document.getElementById("bookId").value;
+    const userId = document.getElementById("userId").value;
+    
+    fetch("../config/book_progress.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `update_progress=1&book_id=${bookId}&user_id=${userId}&last_page=${pageNum}`
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log("Progress berhasil diperbarui:", data);
+    })
+    .catch(error => {
+      console.error("Terjadi kesalahan saat memperbarui progress:", error);
+    });
+  }
+  
+  // Ambil progress dari server dan update progress bar
+function updateProgressBar(progress) {
+  const progressBar = document.getElementById("progressBar");
+  progressBar.style.width = progress + "%";
+  progressBar.textContent = `${progress}%`;
+}
+
+// Update progress bar ketika progres berhasil
+function updateProgress() {
+  const bookId = document.getElementById("bookId").value;
+  const userId = document.getElementById("userId").value;
+
+  fetch("../service/book_progress.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `update_progress=1&book_id=${bookId}&last_page=${pageNum}`
+  })
+  .then(response => response.json()) // Pastikan server mengirimkan response dalam format JSON
+  .then(data => {
+    if (data.progress !== undefined) {
+      updateProgressBar(data.progress);
+    }
+  })
+  .catch(error => console.error("Error updating progress:", error));
+}

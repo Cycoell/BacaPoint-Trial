@@ -67,8 +67,9 @@ if ($bookId > 0) {
       </div>
 
       <!-- Button reset zoom -->
-      <button onclick="resetZoom()">Reset Zoom</button>
-
+      <div class="mx-4">
+        <button onclick="resetZoom()">Reset Zoom</button>
+      </div>
     </header>
 
     <!-- PDF Viewer -->
@@ -77,12 +78,24 @@ if ($bookId > 0) {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white p-4 flex justify-center items-center space-x-4">
+    <footer class="bg-white p-4 flex justify-center items-center space-x-4 relative">
       <button id="prevPage" class="bg-green-500 text-white px-4 py-2 rounded">Sebelumnya</button> 
       <span id="pageInfo" class="text-gray-700">Page 1 of 1</span>
       <button id="nextPage" class="bg-green-500 text-white px-4 py-2 rounded">Selanjutnya</button>
+
+      <!-- Progress Bar -->
+      <div class="w-60 bg-gray-200 rounded-lg overflow-hidden absolute bottom-[25px] right-3">
+        <div id="progressBar" class="bg-green-500 h-5 text-xs text-center text-white">0%</div>
+      </div>
+
     </footer>
+
+
   </div>
+
+  <input type="hidden" id="bookId" value="<?php echo $bookId; ?>">
+  <input type="hidden" id="userId" value="<?php echo $_SESSION['user_id']; ?>">
+
 
   <!-- link Scrip JS -->
   <script src="../src/read.js"></script>
