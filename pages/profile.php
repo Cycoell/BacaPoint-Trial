@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db.php';
+$isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
 $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
 ?>
 
@@ -63,10 +64,11 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
             Grafik Genre
           </button>
 
-          <button onclick="loadContent('collection', this)" id="btn-collection"
-            class="nav-btn">
-            Koleksi Buku
-          </button>
+          <?php if ($isAdmin): ?>
+            <button onclick="loadContent('collection', this)" id="btn-collection" class="nav-btn">
+                Koleksi Buku (Admin)
+            </button>
+          <?php endif; ?>
 
           <a href="../config/logout.php"
             class="block text-red-500 hover:font-bold px-3 py-2">
@@ -111,9 +113,21 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     }
 
     // Saat halaman pertama kali dibuka, langsung tampilkan "Profile"
-    document.addEventListener('DOMContentLoaded', function () {
-      loadContent('account');
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+  // Ambil dari sessionStorage kalau ada
+  const current = sessionStorage.getItem('currentPage') || 'account';
+  
+  // Ambil tombol aktif
+  const activeBtn = document.getElementById(`btn-${current}`);
+  
+  if (activeBtn) {
+    loadContent(current, activeBtn);
+  } else {
+    // Jika tidak ada tombol aktif, pastikan tombol akun yang pertama
+    loadContent('account');
+  }
+});
+
   </script>
 
 <!-- Link js hapus dan edit buku -->

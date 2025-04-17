@@ -32,20 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Proses Sign In
     if (isset($_POST['signin'])) {
-        // Ambil data user berdasarkan email
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-
-        // Verifikasi password
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user'] = $user;
-            header("Location: ../dashboard.php");
-            exit;
-        } else {
-            echo "<script>alert('Email atau password salah');</script>";
+      // Ambil data user berdasarkan email
+      $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $user = $result->fetch_assoc();
+      // Verifikasi password
+      if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['user'] = [
+          'id' => $user['id'],
+          'name' => $user['name'],
+          'email' => $user['email'],
+          'role' => $user['role'] // <--- penting
+        ];
+      
+        header("Location: ../dashboard.php");
+        exit;
+      } else {
+          echo "<script>alert('Email atau password salah');</script>";
         }
     }
 }
