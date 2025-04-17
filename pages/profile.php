@@ -59,7 +59,7 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
             Wishlist
           </button>
 
-          <button onclick="loadContent('develop', this)" id="btn-grafik"
+          <button onclick="loadContent('grafik', this)" id="btn-grafik"
             class="nav-btn">
             Grafik Genre
           </button>
@@ -135,6 +135,91 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
 
 <!-- Link js navbar -->
 <script src="../src/nav.js"></script>
+
+<script>
+function tambahFormBuku() {
+  const container = document.getElementById('formBaruContainer');
+  const formId = 'formBaru-' + Date.now();
+
+  const formHTML = `
+  <form action="../config/input_buku.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-md shadow-md border">
+
+    <!-- Judul & Detail Lainnya -->
+    <div class="flex items-center gap-2">
+      <label class="w-24 font-medium">Judul:</label>
+      <input type="text" name="judul" class="flex-1 border rounded px-2 py-1" required>
+    </div>
+    <div class="flex items-center gap-2">
+      <label class="w-24 font-medium">Tahun:</label>
+      <input type="text" name="tahun" class="flex-1 border rounded px-2 py-1" required>
+    </div>
+    <div class="flex items-center gap-2">
+      <label class="w-24 font-medium">Author:</label>
+      <input type="text" name="author" class="flex-1 border rounded px-2 py-1" required>
+    </div>
+    <div class="flex items-center gap-2">
+      <label class="w-24 font-medium">Genre:</label>
+      <input type="text" name="genre" class="flex-1 border rounded px-2 py-1" required>
+    </div>
+
+    <!-- Cover File Picker -->
+    <div class="flex items-center gap-2">
+      <label class="w-24 font-medium">Cover Path:</label>
+      <input type="file" id="coverPicker" accept="image/*" class="hidden" onchange="updateCoverPath()" />
+      <input type="text" id="coverPath" name="cover_path" class="flex-1 border rounded px-2 py-1 bg-gray-50" readonly required>
+      <button type="button" onclick="document.getElementById('coverPicker').click()" class="bg-blue-500 text-white px-3 py-1 rounded">Pilih Cover</button>
+    </div>
+
+    <!-- PDF File Picker -->
+    <div class="flex items-center gap-2 mt-2">
+      <label class="w-24 font-medium">PDF Path:</label>
+      <input type="file" id="pdfPicker" accept="application/pdf" class="hidden" onchange="updatePDFPath()" />
+      <input type="text" id="pdfPath" name="pdf_path" class="flex-1 border rounded px-2 py-1 bg-gray-50" readonly required>
+      <button type="button" onclick="document.getElementById('pdfPicker').click()" class="bg-blue-500 text-white px-3 py-1 rounded">Pilih PDF</button>
+    </div>
+
+    <!-- Tombol Submit -->
+    <div class="text-right pt-4">
+      <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md shadow mr-3">
+        Simpan Buku
+      </button>
+      <a href="profile.php" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md shadow">
+        Batal
+      </a>
+    </div>
+    </form>
+
+  `;
+
+  container.insertAdjacentHTML('beforeend', formHTML);
+}
+</script>
+
+<script>
+function updateFileName(inputId, labelId) {
+  const input = document.getElementById(inputId);
+  const label = document.getElementById(labelId);
+  if (input.files.length > 0) {
+    label.textContent = input.files[0].name;
+  } else {
+    label.textContent = "Belum dipilih";
+  }
+}
+
+function updateCoverPath() {
+  const file = document.getElementById('coverPicker').files[0];
+  if (file) {
+    document.getElementById('coverPath').value = file.name;
+  }
+}
+
+function updatePDFPath() {
+  const file = document.getElementById('pdfPicker').files[0];
+  if (file) {
+    document.getElementById('pdfPath').value = file.name;
+  }
+}
+</script>
 
 </body>
 </html>
