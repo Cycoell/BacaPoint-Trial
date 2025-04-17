@@ -18,19 +18,22 @@ if (!$result) {
 <!-- Buku Section -->
 <div class="flex justify-between items-center px-6 py-4">
   <h1 class="text-2xl font-semibold">Koleksi Buku</h1>
-  <a href="input_buku.php" class="bg-gray-200 px-4 py-2 rounded">Input</a>
+  <button onclick="tambahFormBuku()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded">Input</button>
 </div>
 
 <!-- Card Buku -->
 <div class="px-6 space-y-4 pb-10">
+  <div id="formBaruContainer" class="space-y-4 px-6 pb-0"></div>
   <?php while ($row = mysqli_fetch_assoc($result)) { ?>
     <form action="../config/update_buku.php" method="POST" class="flex bg-gray-100 p-4 rounded-md border border-blue-400 shadow items-center space-x-4" id="form-<?= $row['id'] ?>">
       <!-- Cover -->
-      <div class="w-20 h-auto bg-gray-300 rounded-md overflow-hidden">
-        <?php if (!empty($row['cover_path'])) { ?>
-          <img src="../<?= htmlspecialchars($row['cover_path']) ?>" class="object-cover w-full h-full rounded-md">
-        <?php } ?>
-      </div>
+      <a href="/BacaPoint-Trial/pages/reading.php?id=<?php echo $row['id']; ?>" class="block">
+        <div class="w-20 h-auto bg-gray-300 rounded-md overflow-hidden">
+          <?php if (!empty($row['cover_path'])) { ?>
+            <img src="../<?= htmlspecialchars($row['cover_path']) ?>" class="object-cover w-full h-full rounded-md">
+          <?php } ?>
+        </div>
+      </a>
 
       <!-- Detail -->
       <div class="flex-1 space-y-2 text-sm">
