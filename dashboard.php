@@ -14,9 +14,10 @@ if (!isset($_SESSION['user'])) {
 
 // Ambil data pengguna dari sesi
 $user = $_SESSION['user'];
+$user_id = $user['id'];
 
-// Query untuk mengambil total points dari tabel book_progress
-$sql = "SELECT SUM(points) AS total_points FROM book_progress WHERE user_id = ?";
+// Query untuk mengambil total poin dari tabel users
+$sql = "SELECT poin FROM users WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
@@ -26,7 +27,7 @@ if ($stmt) {
     
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $totalPoints = $row['total_points'];
+        $totalPoints = $row['poin'];
     } else {
         $totalPoints = 0;
     }
@@ -34,6 +35,7 @@ if ($stmt) {
 } else {
     die("Query preparation failed: " . $conn->error);
 }
+
 
 // Ambil daftar buku untuk ditampilkan
 $query = "SELECT * FROM book_list";
@@ -109,7 +111,7 @@ $result = mysqli_query($conn, $query);
           <!-- BacaPoin -->
           <a href="#" class="flex items-center gap-2 bg-orange-100 text-orange-600 px-3 py-1 rounded-full">
             <img src="assets/icon_coin.png" alt="Coin" class="w-4 h-4 object-contain" />
-            <span class="font-semibold">0</span>
+            <span class="font-semibold"><?php echo $totalPoints; ?></span>
             <span>BacaPoin</span>
           </a>
 

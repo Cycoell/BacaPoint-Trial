@@ -1,3 +1,4 @@
+
 let pdfDoc = null,
     pageNum = 1,
     scale = 1,
@@ -6,12 +7,14 @@ let pdfDoc = null,
     canvas = document.getElementById("pdfCanvas"),
     ctx = canvas.getContext("2d");
 
+// Render satu halaman
 const renderPage = num => {
   pageRendering = true;
   pdfDoc.getPage(num).then(page => {
     const viewport = page.getViewport({ scale });
     canvas.height = viewport.height;
     canvas.width = viewport.width;
+
     const renderContext = {
       canvasContext: ctx,
       viewport: viewport
@@ -23,6 +26,7 @@ const renderPage = num => {
   });
 };
 
+// Queue render agar tidak konflik saat berpindah
 const queueRenderPage = num => {
   if (pageRendering) {
     setTimeout(() => queueRenderPage(num), 100);
@@ -31,21 +35,20 @@ const queueRenderPage = num => {
   }
 };
 
+// Tombol navigasi
 document.getElementById("prevPage").addEventListener("click", () => {
   if (pageNum <= 1) return;
   pageNum--;
   queueRenderPage(pageNum);
-  updateProgress();  // Update progress setelah berpindah halaman
 });
 
 document.getElementById("nextPage").addEventListener("click", () => {
   if (pageNum >= pdfDoc.numPages) return;
   pageNum++;
   queueRenderPage(pageNum);
-  updateProgress();  // Update progress setelah berpindah halaman
 });
 
-
+// Zoom in/out/reset
 function resetZoom() {
   scale = initialScale;
   resizeCanvasToFitScale();
@@ -70,6 +73,7 @@ function resizeCanvasToFitScale() {
     const viewport = page.getViewport({ scale });
     canvas.height = viewport.height;
     canvas.width = viewport.width;
+
     const renderContext = {
       canvasContext: ctx,
       viewport: viewport
@@ -80,6 +84,7 @@ function resizeCanvasToFitScale() {
   });
 }
 
+// Resize canvas ketika ukuran layar berubah
 function resizeCanvasToFitContainer() {
   if (!pdfDoc) return;
   const container = document.getElementById('pdfContainer');
@@ -99,7 +104,7 @@ function resizeCanvasToFitContainer() {
 
 window.addEventListener('resize', resizeCanvasToFitContainer);
 
-// Ambil filePath dari elemen container
+// Ambil file PDF
 const filePath = document.getElementById("pdfContainer").dataset.filepath;
 
 fetch(filePath)
@@ -109,7 +114,12 @@ fetch(filePath)
   })
   .then(data => {
     const typedarray = new Uint8Array(data);
-    pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+
+    // Untuk versi 3.x → workerSrc langsung di getDocument
+    pdfjsLib.getDocument({
+      data: typedarray,
+      workerSrc: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js'
+    }).promise.then(pdf => {
       pdfDoc = pdf;
       setTimeout(() => {
         resizeCanvasToFitContainer();
@@ -118,52 +128,39 @@ fetch(filePath)
   })
   .catch(error => {
     console.error("Terjadi kesalahan:", error);
+    alert("File PDF tidak ditemukan.");
   });
 
-  function updateProgress() {
-    const bookId = document.getElementById("bookId").value;
-    const userId = document.getElementById("userId").value;
-    
-    fetch("../config/book_progress.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `update_progress=1&book_id=${bookId}&user_id=${userId}&last_page=${pageNum}`
-    })
-    .then(response => response.text())
-    .then(data => {
-      console.log("Progress berhasil diperbarui:", data);
-    })
-    .catch(error => {
-      console.error("Terjadi kesalahan saat memperbarui progress:", error);
-    });
-  }
-  
-  // Ambil progress dari server dan update progress bar
-function updateProgressBar(progress) {
-  const progressBar = document.getElementById("progressBar");
-  progressBar.style.width = progress + "%";
-  progressBar.textContent = `${progress}%`;
-}
 
-// Update progress bar ketika progres berhasil
-function updateProgress() {
+
+// Tombol "Selesai Membaca"
+document.getElementById("finishReading").addEventListener("click", function () {
+  if (!confirm("Yakin kamu sudah selesai membaca buku ini?")) return;
+
   const bookId = document.getElementById("bookId").value;
   const userId = document.getElementById("userId").value;
 
-  fetch("../service/book_progress.php", {
+  fetch("../config/finish_reading.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: `update_progress=1&book_id=${bookId}&last_page=${pageNum}`
+    body: `book_id=${bookId}&user_id=${userId}`
   })
-  .then(response => response.json()) // Pastikan server mengirimkan response dalam format JSON
-  .then(data => {
-    if (data.progress !== undefined) {
-      updateProgressBar(data.progress);
-    }
-  })
-  .catch(error => console.error("Error updating progress:", error));
-}
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message || "Terima kasih! Kamu mendapatkan 10 poin!");
+        const btn = document.getElementById("finishReading");
+        btn.disabled = true;
+        btn.textContent = "Sudah Dibaca";
+        btn.classList.add("bg-gray-400", "cursor-not-allowed");
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      alert("Terjadi kesalahan saat menyimpan progres.");
+    });
+});

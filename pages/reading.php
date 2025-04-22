@@ -2,6 +2,12 @@
 session_start();
 include '../db.php'; // Pastikan path ini benar
 
+if (!isset($_SESSION['user']['id'])) {
+  die("Belum login. Session user_id tidak ditemukan.");
+}
+
+$user_id = $_SESSION['user']['id'];
+
 $bookId = isset($_GET['id']) ? $_GET['id'] : 0;
 $filePath = '/bacapoint-trial/assets/buku/default.pdf';
 $judul = "Judul Tidak Ditemukan";
@@ -83,25 +89,27 @@ if ($bookId > 0) {
       <span id="pageInfo" class="text-gray-700">Page 1 of 1</span>
       <button id="nextPage" class="bg-green-500 text-white px-4 py-2 rounded">Selanjutnya</button>
 
-      <!-- Progress Bar -->
-      <div class="w-60 bg-gray-200 rounded-lg overflow-hidden absolute bottom-[25px] right-3">
-        <div id="progressBar" class="bg-green-500 h-5 text-xs text-center text-white">0%</div>
-      </div>
+      <!-- Tombol Selesai Membaca -->
+      <button id="finishReading" class="bottom-[10] right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg absolute  hover:bg-green-700 transition">
+        Selesai Membaca
+      </button>
+
 
     </footer>
 
-
   </div>
-
-  <input type="hidden" id="bookId" value="<?php echo $bookId; ?>">
-  <input type="hidden" id="userId" value="<?php echo $_SESSION['user_id']; ?>">
-
-
-  <!-- link Scrip JS -->
-  <script src="../src/read.js"></script>
 
   <!-- Scrip ke pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   
+
+
+  <!-- link Scrip JS -->
+  <script src="../src/read.js"></script>
+  
 </body>
+
+<input type="hidden" id="bookId" value="<?php echo $bookId; ?>">
+<input type="hidden" id="userId" value="<?php echo $userId; ?>">
+
 </html>
