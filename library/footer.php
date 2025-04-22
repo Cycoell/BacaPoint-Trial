@@ -23,8 +23,8 @@ if (session_status() === PHP_SESSION_NONE) {
       <div>
         <h3 class="font-semibold mb-2 text-gray-700">Weebly Themes</h3>
         <ul class="space-y-1 text-gray-500">
-          <li><a href="#" class="hover:underline">Pre-sale FAQs</a></li>
-          <li><a href="#" class="hover:underline">Submit a Ticket</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Submit a Ticket</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Pre-sale FAQs</a></li>
         </ul>
       </div>
 
@@ -32,7 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
       <div>
         <h3 class="font-semibold mb-2 text-gray-700">Services</h3>
         <ul class="space-y-1 text-gray-500">
-          <li><a href="#" class="hover:underline">Theme Tweak</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Theme Tweak</a></li>
         </ul>
       </div>
 
@@ -40,8 +40,8 @@ if (session_status() === PHP_SESSION_NONE) {
       <div>
         <h3 class="font-semibold mb-2 text-gray-700">Showcase</h3>
         <ul class="space-y-1 text-gray-500">
-          <li><a href="#" class="hover:underline">Widgetkit</a></li>
-          <li><a href="#" class="hover:underline">Support</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Widgetkit</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Support</a></li>
         </ul>
       </div>
 
@@ -49,9 +49,9 @@ if (session_status() === PHP_SESSION_NONE) {
       <div>
         <h3 class="font-semibold mb-2 text-gray-700">About Us</h3>
         <ul class="space-y-1 text-gray-500">
-          <li><a href="#" class="hover:underline">Contact Us</a></li>
-          <li><a href="#" class="hover:underline">Affiliates</a></li>
-          <li><a href="#" class="hover:underline">Resources</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Contact Us</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Affiliates</a></li>
+          <li><a href="/BacaPoint-trial/pages/develop.php" class="hover:underline">Resources</a></li>
         </ul>
       </div>
     </div>
@@ -61,10 +61,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <!-- Ikon Sosial -->
     <div class="flex justify-center space-x-6 mb-4">
-      <a href="#"><img src="/BacaPoint-Trial/assets/facebook-square.png" alt="Facebook" class="w-5 h-5 hover:scale-110 transition" /></a>
-      <a href="#"><img src="/BacaPoint-Trial/assets/twitter.png" alt="Twitter" class="w-5 h-5 hover:scale-110 transition" /></a>
-      <a href="#"><img src="/BacaPoint-Trial/assets/instagram.png" alt="Instagram" class="w-6 h-6 hover:scale-110 transition" /></a>
-      <a href="#"><img src="/BacaPoint-Trial/assets/whatsapp.png" alt="WhatsApp" class="w-6 h-6 hover:scale-110 transition" /></a>
+      <a href="/BacaPoint-trial/pages/develop.php"><img src="/BacaPoint-Trial/assets/facebook-square.png" alt="Facebook" class="w-5 h-5 hover:scale-110 transition" /></a>
+      <a href="/BacaPoint-trial/pages/develop.php"><img src="/BacaPoint-Trial/assets/twitter.png" alt="Twitter" class="w-5 h-5 hover:scale-110 transition" /></a>
+      <a href="/BacaPoint-trial/pages/develop.php"><img src="/BacaPoint-Trial/assets/instagram.png" alt="Instagram" class="w-6 h-6 hover:scale-110 transition" /></a>
+      <a href="/BacaPoint-trial/pages/develop.php"><img src="/BacaPoint-Trial/assets/whatsapp.png" alt="WhatsApp" class="w-6 h-6 hover:scale-110 transition" /></a>
       </div>
 
     <!-- Copyright -->
