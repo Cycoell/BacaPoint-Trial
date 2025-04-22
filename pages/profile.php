@@ -16,6 +16,13 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     <!--Link Icon  -->
     <?php include '../library/icon.php'; ?>
     <link href="../css/styles.css" rel="stylesheet">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Tailwind CDN (kalau kamu pakai Tailwind) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -97,20 +104,24 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
   </div>
 </div>
 
-
-
   <script>
     // Fungsi untuk memuat konten berdasarkan nama file (tanpa .php)
     function loadContent(page) {
-      fetch(`${page}.php`)  // ← Ganti di sini
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('main-content').innerHTML = html;
-        })
-        .catch(error => {
-          document.getElementById('main-content').innerHTML = '<p class="text-red-500">Gagal memuat konten.</p>';
-        });
-    }
+    fetch(`${page}.php`)
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('main-content').innerHTML = html;
+
+        if (page === 'grafik') {
+          setTimeout(() => {
+            renderGenreChart(); // Panggil manual
+          }, 50); // beri delay kecil agar canvas sempat dimuat
+        }
+      })
+      .catch(error => {
+        document.getElementById('main-content').innerHTML = '<p class="text-red-500">Gagal memuat konten.</p>';
+      });
+  }
 
     // Saat halaman pertama kali dibuka, langsung tampilkan "Profile"
   document.addEventListener('DOMContentLoaded', function () {
@@ -136,10 +147,18 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
 <!-- Link js navbar -->
 <script src="../src/nav.js"></script>
 
+<!-- Link js Chart -->
+<script src="../src/chart.js"></script>
+
 <script>
 function tambahFormBuku() {
   const container = document.getElementById('formBaruContainer');
   const formId = 'formBaru-' + Date.now();
+
+  // Cek apakah form sudah ada
+  if (container.querySelector('form')) {
+    return; // Jangan tambahkan form baru kalau sudah ada
+  }
 
   const formHTML = `
   <form action="../config/input_buku.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-md shadow-md border">
