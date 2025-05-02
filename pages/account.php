@@ -124,7 +124,7 @@ mysqli_stmt_close($query);
                 </div>
 
                 <!-- Tanggal Lahir -->
-                <!-- <div>
+                <div>
                     <label class="block text-sm font-medium text-gray-500 mb-1">Tanggal Lahir</label>
                     <div class="flex items-center">
                         <input type="date" value="<?= htmlspecialchars($user_data['tanggal_lahir']) ?>" 
@@ -135,10 +135,10 @@ mysqli_stmt_close($query);
                             </svg>
                         </button>
                     </div>
-                </div> -->
+                </div>
 
                 <!-- Nomor Telepon -->
-                <!-- <div>
+                <div>
                     <label class="block text-sm font-medium text-gray-500 mb-1">Nomor Telepon</label>
                     <div class="flex items-center">
                         <input type="tel" value="<?= htmlspecialchars($user_data['nomor_telepon']) ?>" 
@@ -149,7 +149,7 @@ mysqli_stmt_close($query);
                             </svg>
                         </button>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
