@@ -1,46 +1,98 @@
-document.addEventListener("DOMContentLoaded", function () {
-const canvas = document.getElementById("genreChart");
-    if (canvas) {
-      fetch("../config/get_genre_data.php")
-        .then((response) => response.json())
-        .then((data) => {
-          const labels = data.map((item) => item.genre);
-          const counts = data.map((item) => parseInt(item.jumlah));
-
-          const ctx = canvas.getContext("2d");
-          new Chart(ctx, {
-            type: "bar",
-            data: {
-              labels: labels,
-              datasets: [{
-                label: "Jumlah Buku per Genre",
-                data: counts,
-                backgroundColor: [
-                  "#60a5fa", "#f472b6", "#34d399", "#facc15", "#f87171",
-                  "#a78bfa", "#38bdf8", "#fb923c", "#10b981", "#ef4444"
-                ],
-                borderColor: "#ffffff",
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: { display: false },
-                title: {
-                  display: false,
-                }
-              },
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  ticks: {
-                    stepSize: 1
-                  }
-                }
-              }
-            }
+document.addEventListener('DOMContentLoaded', function() {
+  let chart;
+  
+  // Initial load
+  loadChartData();
+  
+  // Chart type switcher
+  document.getElementById('chartType').addEventListener('change', function() {
+      if (chart) {
+          chart.destroy();
+          loadChartData();
+      }
+  });
+  
+  function loadChartData() {
+      const loading = document.getElementById('loading');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      loading.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+      
+      fetch('../config/get_genre_data.php')
+          .then(response => {
+              if (!response.ok) throw new Error('Network response was not ok');
+              return response.json();
+          })
+          .then(data => {
+              // Update stats
+              document.getElementById('totalGenres').textContent = data.length;
+              
+              const totalBooks = data.reduce((sum, item) => sum + parseInt(item.jumlah), 0);
+              document.getElementById('totalBooks').textContent = totalBooks;
+              
+              const popular = data.reduce((prev, current) => 
+                  (prev.jumlah > current.jumlah) ? prev : current
+              );
+              document.getElementById('popularGenre').textContent = `${popular.genre} (${popular.jumlah})`;
+              
+              // Render chart
+              renderChart(data);
+              loading.classList.add('hidden');
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              loading.classList.add('hidden');
+              errorMessage.classList.remove('hidden');
+              document.getElementById('errorText').textContent = 
+                  `Error: ${error.message || 'Gagal memuat data'}`;
           });
-        })
-        .catch((error) => console.error("Error fetching data:", error));
-    }});
+  }
+  
+  function renderChart(data) {
+      const ctx = document.getElementById('genreChart').getContext('2d');
+      const chartType = document.getElementById('chartType').value;
+      
+      chart = new Chart(ctx, {
+          type: chartType,
+          data: {
+              labels: data.map(item => item.genre),
+              datasets: [{
+                  label: 'Jumlah Buku',
+                  data: data.map(item => parseInt(item.jumlah)),
+                  backgroundColor: [
+                      '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6',
+                      '#EC4899', '#14B8A6', '#F97316', '#64748B', '#84CC16'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                  legend: {
+                      position: 'right',
+                      labels: {
+                          boxWidth: 12,
+                          padding: 20
+                      }
+                  },
+                  tooltip: {
+                      enabled: true,
+                      mode: 'index',
+                      intersect: false
+                  }
+              },
+              scales: chartType === 'bar' ? {
+                  y: {
+                      beginAtZero: true,
+                      ticks: {
+                          stepSize: 1
+                      }
+                  }
+              } : undefined
+          }
+      });
+  }
+});

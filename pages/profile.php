@@ -19,7 +19,7 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
 
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    
     <!-- Tailwind CDN (kalau kamu pakai Tailwind) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -45,8 +45,8 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
             </svg>
           </div>
           <div>
-            <p class="font-semibold">Ujang Ronda</p>
-            <p class="text-sm text-gray-500">ujangronda786@gmail.com</p>
+            <p class="font-semibold" value="<?= htmlspecialchars($user_data['name']) ?>"></p>
+            <p class="text-sm text-gray-500" type="email" value="<?= htmlspecialchars($user_data['email']) ?>"></p>
           </div>
         </div>
         </div>
@@ -108,20 +108,30 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     // Fungsi untuk memuat konten berdasarkan nama file (tanpa .php)
     function loadContent(page) {
     fetch(`${page}.php`)
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('main-content').innerHTML = html;
-
-        if (page === 'grafik') {
-          setTimeout(() => {
-            renderGenreChart(); // Panggil manual
-          }, 50); // beri delay kecil agar canvas sempat dimuat
-        }
-      })
-      .catch(error => {
-        document.getElementById('main-content').innerHTML = '<p class="text-red-500">Gagal memuat konten.</p>';
-      });
-  }
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to load content");
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById('main-content').innerHTML = html;
+            
+            if (page === 'grafik') {
+                // Tunggu hingga DOM benar-benar siap
+                setTimeout(() => {
+                    if (typeof renderGenreChart === 'function') {
+                        renderGenreChart();
+                    } else {
+                        console.error("renderGenreChart function not found!");
+                    }
+                }, 100);
+            }
+        })
+        .catch(error => {
+            console.error("Error loading content:", error);
+            document.getElementById('main-content').innerHTML = 
+                `<p class="text-red-500">Gagal memuat konten: ${error.message}</p>`;
+        });
+}
 
     // Saat halaman pertama kali dibuka, langsung tampilkan "Profile"
   document.addEventListener('DOMContentLoaded', function () {
