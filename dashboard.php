@@ -4,8 +4,7 @@
 // Mulai sesi
 session_start();
 include 'db.php';
-$query = "SELECT * FROM book_list";
-$result = mysqli_query($conn, $query);
+
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['user'])) {
     // Jika belum login, redirect ke halaman login
@@ -15,7 +14,34 @@ if (!isset($_SESSION['user'])) {
 
 // Ambil data pengguna dari sesi
 $user = $_SESSION['user'];
+$user_id = $user['id'];
+
+// Query untuk mengambil total poin dari tabel users
+$sql = "SELECT poin FROM users WHERE id = ?";
+$stmt = $conn->prepare($sql);
+
+if ($stmt) {
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $totalPoints = $row['poin'];
+    } else {
+        $totalPoints = 0;
+    }
+    $stmt->close();
+} else {
+    die("Query preparation failed: " . $conn->error);
+}
+
+
+// Ambil daftar buku untuk ditampilkan
+$query = "SELECT * FROM book_list";
+$result = mysqli_query($conn, $query);
 ?>
+
 
 <!-- END PHP SESSION -->
 
@@ -85,7 +111,7 @@ $user = $_SESSION['user'];
           <!-- BacaPoin -->
           <a href="#" class="flex items-center gap-2 bg-orange-100 text-orange-600 px-3 py-1 rounded-full">
             <img src="assets/icon_coin.png" alt="Coin" class="w-4 h-4 object-contain" />
-            <span class="font-semibold">0</span>
+            <span class="font-semibold"><?php echo $totalPoints; ?></span>
             <span>BacaPoin</span>
           </a>
 

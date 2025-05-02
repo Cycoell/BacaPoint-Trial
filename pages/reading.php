@@ -2,6 +2,12 @@
 session_start();
 include '../db.php'; // Pastikan path ini benar
 
+if (!isset($_SESSION['user']['id'])) {
+  die("Belum login. Session user_id tidak ditemukan.");
+}
+
+$user_id = $_SESSION['user']['id'];
+
 $bookId = isset($_GET['id']) ? $_GET['id'] : 0;
 $filePath = '/bacapoint-trial/assets/buku/default.pdf';
 $judul = "Judul Tidak Ditemukan";
@@ -67,8 +73,9 @@ if ($bookId > 0) {
       </div>
 
       <!-- Button reset zoom -->
-      <button onclick="resetZoom()">Reset Zoom</button>
-
+      <div class="mx-4">
+        <button onclick="resetZoom()">Reset Zoom</button>
+      </div>
     </header>
 
     <!-- PDF Viewer -->
@@ -77,18 +84,32 @@ if ($bookId > 0) {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white p-4 flex justify-center items-center space-x-4">
+    <footer class="bg-white p-4 flex justify-center items-center space-x-4 relative">
       <button id="prevPage" class="bg-green-500 text-white px-4 py-2 rounded">Sebelumnya</button> 
       <span id="pageInfo" class="text-gray-700">Page 1 of 1</span>
       <button id="nextPage" class="bg-green-500 text-white px-4 py-2 rounded">Selanjutnya</button>
-    </footer>
-  </div>
 
-  <!-- link Scrip JS -->
-  <script src="../src/read.js"></script>
+      <!-- Tombol Selesai Membaca -->
+      <button id="finishReading" class="bottom-[10] right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg absolute  hover:bg-green-700 transition">
+        Selesai Membaca
+      </button>
+
+
+    </footer>
+
+  </div>
 
   <!-- Scrip ke pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   
+
+
+  <!-- link Scrip JS -->
+  <script src="../src/read.js"></script>
+  
 </body>
+
+<input type="hidden" id="bookId" value="<?php echo $bookId; ?>">
+<input type="hidden" id="userId" value="<?php echo $userId; ?>">
+
 </html>
