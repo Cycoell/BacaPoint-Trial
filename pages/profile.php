@@ -41,15 +41,20 @@ $activePage = 'akun'; // 👈 ini untuk tandai halaman aktif
     <aside class="w-1/4 bg-gray-50 p-6 border-r">
       <div class="mb-6">
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M5.121 17.804A4.992 4.992 0 017 13h10a4.992 4.992 0 011.879 4.804M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
+          <div class="relative w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+              <?php if (!empty($user_data['foto_profil'])): ?>
+                  <img src="../uploads/profiles/<?= htmlspecialchars($user_data['foto_profil']) ?>" 
+                        alt="Foto Profil" class="w-full h-full object-cover">
+              <?php else: ?>
+                  <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+              <?php endif; ?>
           </div>
           <div>
-          <p class="font-semibold"><?= htmlspecialchars($_SESSION['user']['name']) ?></p>
-          <p class="text-sm text-gray-500"><?= htmlspecialchars($_SESSION['user']['email']) ?></p>
-
+            <p class="font-semibold"><?= htmlspecialchars($_SESSION['user']['name']) ?></p>
+            <p class="text-sm text-gray-500"><?= htmlspecialchars($_SESSION['user']['email']) ?></p>
           </div>
         </div>
         </div>
