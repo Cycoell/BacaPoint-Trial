@@ -50,7 +50,10 @@ if ($bookId > 0) {
   <?php include '../library/icon.php'; ?>
 
   <!-- Link ke css -->
-  <link href="../css/styles.css" rel="stylesheet"> 
+  <link href="../css/styles.css" rel="stylesheet">
+  
+  <!-- Link Alrets  -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
 </head>
 <body class="bg-gray-300 font-sans w-screen h-screen overflow-hidden flex flex-col">
@@ -114,6 +117,9 @@ if ($bookId > 0) {
 
   <!-- link Scrip JS -->
   <script src="../src/read.js"></script>
+
+  <!-- Link Script -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   
   
