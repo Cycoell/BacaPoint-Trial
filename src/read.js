@@ -134,33 +134,38 @@ fetch(filePath)
 
 
 // Tombol "Selesai Membaca"
-document.getElementById("finishReading").addEventListener("click", function () {
-  if (!confirm("Yakin kamu sudah selesai membaca buku ini?")) return;
+document.getElementById("finishReading")?.addEventListener("click", function() {
+  if (!confirm("Apakah Anda yakin sudah menyelesaikan membaca buku ini?")) return;
 
   const bookId = document.getElementById("bookId").value;
-  const userId = document.getElementById("userId").value;
 
   fetch("../config/finish_reading.php", {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `book_id=${bookId}&user_id=${userId}`
+    body: `book_id=${bookId}` // Hanya kirim book_id, user_id diambil dari session
   })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert(data.message || "Terima kasih! Kamu mendapatkan 10 poin!");
-        const btn = document.getElementById("finishReading");
-        btn.disabled = true;
-        btn.textContent = "Sudah Dibaca";
-        btn.classList.add("bg-gray-400", "cursor-not-allowed");
-      } else {
-        alert(data.message);
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message);
+      const btn = document.getElementById("finishReading");
+      if (btn) btn.remove();
+      
+      // Update poin user di header jika ada
+      const pointsElement = document.getElementById("userPoints");
+      if (pointsElement) {
+        pointsElement.textContent = parseInt(pointsElement.textContent) + data.points;
       }
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      alert("Terjadi kesalahan saat menyimpan progres.");
-    });
+    } else {
+      alert("Error: " + data.message);
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Terjadi kesalahan saat memproses");
+  });
 });
+
+

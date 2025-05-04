@@ -1,23 +1,32 @@
 <?php
 session_start();
-include '../db.php'; // Pastikan path ini benar
+include '../db.php';
 
 if (!isset($_SESSION['user']['id'])) {
   die("Belum login. Session user_id tidak ditemukan.");
 }
 
 $user_id = $_SESSION['user']['id'];
-
 $bookId = isset($_GET['id']) ? $_GET['id'] : 0;
 $filePath = '/bacapoint-trial/assets/buku/default.pdf';
 $judul = "Judul Tidak Ditemukan";
+$can_earn_points = true;
 
 if ($bookId > 0) {
+    // Cek apakah sudah pernah mendapatkan poin untuk buku ini
+    $check = $conn->prepare("SELECT point_given FROM reading_history WHERE user_id = ? AND book_id = ?");
+    $check->bind_param("ii", $user_id, $bookId);
+    $check->execute();
+    $result = $check->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $can_earn_points = ($row['point_given'] != 1);
+    }
+    
+    // Ambil info buku
     $sql = "SELECT pdf_path, judul FROM book_list WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        die('Prepare failed: ' . $conn->error);
-    }
     $stmt->bind_param("i", $bookId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -85,17 +94,16 @@ if ($bookId > 0) {
 
     <!-- Footer -->
     <footer class="bg-white p-4 flex justify-center items-center space-x-4 relative">
-      <button id="prevPage" class="bg-green-500 text-white px-4 py-2 rounded">Sebelumnya</button> 
-      <span id="pageInfo" class="text-gray-700">Page 1 of 1</span>
-      <button id="nextPage" class="bg-green-500 text-white px-4 py-2 rounded">Selanjutnya</button>
+  <button id="prevPage" class="bg-green-500 text-white px-4 py-2 rounded">Sebelumnya</button> 
+  <span id="pageInfo" class="text-gray-700">Page 1 of 1</span>
+  <button id="nextPage" class="bg-green-500 text-white px-4 py-2 rounded">Selanjutnya</button>
 
-      <!-- Tombol Selesai Membaca -->
-      <button id="finishReading" class="bottom-[10] right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg absolute  hover:bg-green-700 transition">
-        Selesai Membaca
-      </button>
-
-
-    </footer>
+  <?php if ($can_earn_points): ?>
+    <button id="finishReading" class="bottom-[10] right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg absolute hover:bg-green-700 transition">
+      Selesai Membaca
+    </button>
+  <?php endif; ?>
+</footer>
 
   </div>
 
@@ -106,10 +114,12 @@ if ($bookId > 0) {
 
   <!-- link Scrip JS -->
   <script src="../src/read.js"></script>
+
+  
   
 </body>
 
 <input type="hidden" id="bookId" value="<?php echo $bookId; ?>">
-<input type="hidden" id="userId" value="<?php echo $userId; ?>">
+<input type="hidden" id="userId" value="<?php echo $_SESSION['user']['id']; ?>">
 
 </html>

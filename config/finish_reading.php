@@ -1,44 +1,58 @@
-    <?php
-    session_start();
-    include '../db.php';
+<?php
+session_start();
+include '../db.php';
 
-    if (!isset($_SESSION['user']['id'])) {
-        die("Belum login. Session user_id tidak ditemukan.");
-      }
-      
-      $user_id = $_SESSION['user']['id'];
+if (!isset($_SESSION['user']['id'])) {
+    die(json_encode(["success" => false, "message" => "Belum login"]));
+}
 
-    header('Content-Type: application/json');
+header('Content-Type: application/json');
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $userId = intval($_POST['user_id']);
-        $bookId = intval($_POST['book_id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $bookId = intval($_POST['book_id']);
+    $userIdFromSession = $_SESSION['user']['id']; // Ambil dari session langsung
 
-        // Cek apakah user sudah menyelesaikan buku ini
-        $check = $conn->prepare("SELECT * FROM reading_history WHERE user_id = ? AND book_id = ? AND point_given = 1");
-        $check->bind_param("ii", $userId, $bookId);
+    // Tidak perlu validasi user_id dari POST karena kita pakai session
+    $conn->begin_transaction();
+
+    try {
+        // Cek apakah sudah pernah mendapatkan poin
+        $check = $conn->prepare("SELECT point_given FROM reading_history WHERE user_id = ? AND book_id = ?");
+        $check->bind_param("ii", $userIdFromSession, $bookId);
         $check->execute();
         $result = $check->get_result();
-
-        if ($result->num_rows > 0) {
-            echo json_encode(["success" => false, "message" => "Kamu sudah menyelesaikan dan dapat poin."]);
-            exit;
+        
+        if ($result->num_rows > 0 && $result->fetch_assoc()['point_given'] == 1) {
+            throw new Exception("Buku ini sudah selesai dibaca");
         }
 
-        // Masukkan atau update data bacaan
-        $stmt = $conn->prepare("
-            INSERT INTO reading_history (user_id, book_id, completed_at, point_given) 
-            VALUES (?, ?, NOW(), 1) 
-            ON DUPLICATE KEY UPDATE completed_at = NOW(), point_given = 1
-        ");
-        $stmt->bind_param("ii", $userId, $bookId);
+        // Update atau insert record
+        if ($result->num_rows > 0) {
+            $stmt = $conn->prepare("UPDATE reading_history SET completed_at = NOW(), point_given = 1 WHERE user_id = ? AND book_id = ?");
+        } else {
+            $stmt = $conn->prepare("INSERT INTO reading_history (user_id, book_id, completed_at, point_given) VALUES (?, ?, NOW(), 1)");
+        }
+        $stmt->bind_param("ii", $userIdFromSession, $bookId);
         $stmt->execute();
 
         // Tambahkan poin
-        $updatePoints = $conn->prepare("UPDATE users SET poin = poin + 10 WHERE id = ?");
-        $updatePoints->bind_param("i", $userId);
-        $updatePoints->execute();
+        $update = $conn->prepare("UPDATE users SET poin = poin + 10 WHERE id = ?");
+        $update->bind_param("i", $userIdFromSession);
+        $update->execute();
 
-        echo json_encode(["success" => true, "message" => "Terima kasih! Kamu mendapatkan 10 poin!"]);
+        $conn->commit();
+        
+        echo json_encode([
+            "success" => true, 
+            "message" => "Poin berhasil ditambahkan",
+            "points" => 10
+        ]);
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode([
+            "success" => false, 
+            "message" => $e->getMessage()
+        ]);
     }
-    ?>
+}
+?>
